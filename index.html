@@ -1,8 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Neon Store Order</title>
+<title>Neon Store - Fish It Shop</title>
 
 <style>
 
@@ -20,16 +21,17 @@ text-align:center;
 }
 
 .logo{
-font-size:28px;
+font-size:32px;
 font-weight:bold;
 color:#22d3ee;
 }
 
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 padding:20px;
+margin-right:320px;
 }
 
 .card{
@@ -53,29 +55,40 @@ font-weight:bold;
 button{
 background:#22d3ee;
 border:none;
-padding:10px;
+padding:8px 12px;
 border-radius:6px;
 cursor:pointer;
 }
 
 .cart{
 background:#020617;
-padding:20px;
 position:fixed;
 right:0;
 top:0;
-width:280px;
+width:300px;
 height:100%;
+padding:20px;
 overflow:auto;
 }
 
-.cart h3{
+.cart h2{
 margin-top:0;
 }
 
 .cart-item{
+border-bottom:1px solid #334155;
+padding:10px 0;
 font-size:14px;
-margin-bottom:10px;
+}
+
+.qty-btn{
+padding:3px 8px;
+margin:3px;
+}
+
+.delete{
+background:#ef4444;
+margin-top:5px;
 }
 
 .total{
@@ -102,11 +115,9 @@ margin-bottom:10px;
 <div>Fish It Item Shop</div>
 </header>
 
-<div style="padding:20px">
-
+<div style="padding:20px;margin-right:320px;">
 Username Roblox
-<input id="username" placeholder="Masukkan username">
-
+<input id="username" placeholder="Masukkan Username Roblox">
 </div>
 
 <div class="container">
@@ -115,65 +126,37 @@ Username Roblox
 <img src="https://via.placeholder.com/200">
 <h4>Dark Matter Scythe</h4>
 <div class="price">Rp 84.000</div>
-
-Qty
-<input type="number" value="1" min="1" id="qty1">
-
-<button onclick="tambahItem('Dark Matter Scythe',84000,'qty1')">
-Tambah
-</button>
-
+<button onclick="addToCart('Dark Matter Scythe',84000)">Tambah</button>
 </div>
 
 <div class="card">
 <img src="https://via.placeholder.com/200">
 <h4>Kitty Guitar</h4>
 <div class="price">Rp 76.000</div>
-
-Qty
-<input type="number" value="1" min="1" id="qty2">
-
-<button onclick="tambahItem('Kitty Guitar',76000,'qty2')">
-Tambah
-</button>
-
+<button onclick="addToCart('Kitty Guitar',76000)">Tambah</button>
 </div>
 
 <div class="card">
 <img src="https://via.placeholder.com/200">
 <h4>Void Craft</h4>
 <div class="price">Rp 47.000</div>
-
-Qty
-<input type="number" value="1" min="1" id="qty3">
-
-<button onclick="tambahItem('Void Craft',47000,'qty3')">
-Tambah
-</button>
-
+<button onclick="addToCart('Void Craft',47000)">Tambah</button>
 </div>
 
 <div class="card">
 <img src="https://via.placeholder.com/200">
 <h4>VIP + Luck</h4>
 <div class="price">Rp 38.000</div>
-
-Qty
-<input type="number" value="1" min="1" id="qty4">
-
-<button onclick="tambahItem('VIP + Luck',38000,'qty4')">
-Tambah
-</button>
-
+<button onclick="addToCart('VIP + Luck',38000)">Tambah</button>
 </div>
 
 </div>
 
 <div class="cart">
 
-<h3>Keranjang</h3>
+<h2>Keranjang</h2>
 
-<div id="cartList"></div>
+<div id="cartItems"></div>
 
 <div class="total">
 Total : Rp <span id="total">0</span>
@@ -181,32 +164,28 @@ Total : Rp <span id="total">0</span>
 
 <br>
 
-<button onclick="orderWA()">
-Order via WhatsApp
-</button>
+<button onclick="orderWA()">Order via WhatsApp</button>
 
 </div>
 
 <script>
 
-let cart = []
+let cart=[]
 
-function tambahItem(nama,harga,qtyId){
+function addToCart(name,price){
 
-let qty = parseInt(document.getElementById(qtyId).value)
+let found=cart.find(item=>item.name===name)
 
-let item = cart.find(i=>i.nama===nama)
+if(found){
 
-if(item){
-
-item.qty += qty
+found.qty++
 
 }else{
 
 cart.push({
-nama:nama,
-harga:harga,
-qty:qty
+name:name,
+price:price,
+qty:1
 })
 
 }
@@ -215,69 +194,113 @@ renderCart()
 
 }
 
+function plusQty(index){
+
+cart[index].qty++
+
+renderCart()
+
+}
+
+function minusQty(index){
+
+if(cart[index].qty>1){
+
+cart[index].qty--
+
+}else{
+
+cart.splice(index,1)
+
+}
+
+renderCart()
+
+}
+
+function removeItem(index){
+
+cart.splice(index,1)
+
+renderCart()
+
+}
+
 function renderCart(){
 
-let list = document.getElementById("cartList")
+let box=document.getElementById("cartItems")
+box.innerHTML=""
 
-list.innerHTML=""
+let total=0
 
-let total = 0
+cart.forEach((item,index)=>{
 
-cart.forEach(item=>{
+let subtotal=item.price*item.qty
+total+=subtotal
 
-let subtotal = item.harga * item.qty
+box.innerHTML+=`
+<div class="cart-item">
 
-total += subtotal
+<b>${item.name}</b>
 
-list.innerHTML +=
-`<div class="cart-item">
-${item.nama} x${item.qty}
+<br>
+
+<button class="qty-btn" onclick="minusQty(${index})">-</button>
+${item.qty}
+<button class="qty-btn" onclick="plusQty(${index})">+</button>
+
 <br>
 Rp ${subtotal.toLocaleString("id-ID")}
-</div>`
+
+<br>
+<button class="delete" onclick="removeItem(${index})">
+Hapus
+</button>
+
+</div>
+`
 
 })
 
-document.getElementById("total").innerText =
+document.getElementById("total").innerText=
 total.toLocaleString("id-ID")
 
 }
 
 function orderWA(){
 
-let username = document.getElementById("username").value
+let username=document.getElementById("username").value
 
-let pesanItem=""
-
+let text=""
 let total=0
 
 cart.forEach(item=>{
 
-let subtotal = item.harga * item.qty
+let subtotal=item.price*item.qty
 
-pesanItem += `${item.nama} x${item.qty} = Rp ${subtotal.toLocaleString("id-ID")}\n`
+text+=`${item.name} x${item.qty} = Rp ${subtotal.toLocaleString("id-ID")}\n`
 
-total += subtotal
+total+=subtotal
 
 })
 
-let pesan =
+let message=
 `ORDER NEON STORE
 
 Username : ${username}
 
 Item :
-${pesanItem}
+${text}
 
 Total : Rp ${total.toLocaleString("id-ID")}
 
 Saya sudah melakukan pembayaran via QRIS.
 Berikut bukti transfer saya.`
 
-let url =
-"https://wa.me/6285804197934?text="+encodeURIComponent(pesan)
+let url=
+"https://wa.me/6285804197934?text="+encodeURIComponent(message)
 
-window.open(url)
+window.open(url,"_blank")
 
 }
 
@@ -285,3 +308,4 @@ window.open(url)
 
 </body>
 </html>
+```
