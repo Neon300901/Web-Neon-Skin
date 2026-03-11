@@ -133,5 +133,204 @@ Username Roblox
 
 <div class="card"><h4>Mutasi</h4><div class="price">Rp 25.000</div><button onclick="addToCart('Mutasi',25000)">Tambah</button></div>
 
-<div class="card"><h4>Advance Luck</h4><div class="price">Rp 47.000</div><butto
+<div class="card"><h4>Advance Luck</h4><div class="price">Rp 47.000</div><button onclick="addToCart('Advance Luck',47000)">Tambah</button></div>
+
+<div class="card"><h4>Extra Luck</h4><div class="price">Rp 21.000</div><button onclick="addToCart('Extra Luck',21000)">Tambah</button></div>
+
+<div class="card"><h4>Double XP</h4><div class="price">Rp 18.000</div><button onclick="addToCart('Double XP',18000)">Tambah</button></div>
+
+<div class="card"><h4>Mini Hoverboat</h4><div class="price">Rp 19.000</div><button onclick="addToCart('Mini Hoverboat',19000)">Tambah</button></div>
+
+<div class="card"><h4>Sell Anywhere</h4><div class="price">Rp 27.000</div><button onclick="addToCart('Sell Anywhere',27000)">Tambah</button></div>
+
+<div class="card"><h4>Small Luck</h4><div class="price">Rp 5.000</div><button onclick="addToCart('Small Luck',5000)">Tambah</button></div>
+
+<div class="card"><h4>Azure Crate 1x</h4><div class="price">Rp 11.000</div><button onclick="addToCart('Azure Crate 1x',11000)">Tambah</button></div>
+
+<div class="card"><h4>Azure Crate 5x</h4><div class="price">Rp 50.000</div><button onclick="addToCart('Azure Crate 5x',50000)">Tambah</button></div>
+
+<div class="card"><h4>Pirate Crate 1x</h4><div class="price">Rp 11.000</div><button onclick="addToCart('Pirate Crate 1x',11000)">Tambah</button></div>
+
+<div class="card"><h4>Pirate Crate 5x</h4><div class="price">Rp 50.000</div><button onclick="addToCart('Pirate Crate 5x',50000)">Tambah</button></div>
+
+<div class="card"><h4>Elder Wood Crate 1x</h4><div class="price">Rp 10.000</div><button onclick="addToCart('Elder Wood Crate 1x',10000)">Tambah</button></div>
+
+<div class="card"><h4>Elder Wood Crate 5x</h4><div class="price">Rp 45.000</div><button onclick="addToCart('Elder Wood Crate 5x',45000)">Tambah</button></div>
+
+<div class="card"><h4>Luxury Crate 1x</h4><div class="price">Rp 10.000</div><button onclick="addToCart('Luxury Crate 1x',10000)">Tambah</button></div>
+
+<div class="card"><h4>Luxury Crate 5x</h4><div class="price">Rp 45.000</div><button onclick="addToCart('Luxury Crate 5x',45000)">Tambah</button></div>
+
+</div>
+
+<div class="cart">
+
+<h2>Keranjang</h2>
+
+<div id="cartItems"></div>
+
+<div class="total">
+Total : Rp <span id="total">0</span>
+</div>
+
+<br>
+
+<button onclick="showQRIS()">Checkout</button>
+
+<div class="qris-box" id="qrisBox">
+
+<h3>Scan QRIS</h3>
+
+<img src="GANTI-DENGAN-GAMBAR-QRIS-KAMU.png">
+
+<p>Setelah bayar klik order WhatsApp</p>
+
+<button onclick="orderWA()">Kirim Bukti ke WhatsApp</button>
+
+</div>
+
+</div>
+
+<script>
+
+let cart=[]
+
+function addToCart(name,price){
+
+let item=cart.find(i=>i.name===name)
+
+if(item){
+
+item.qty++
+
+}else{
+
+cart.push({name,price,qty:1})
+
+}
+
+renderCart()
+
+}
+
+function plusQty(i){
+
+cart[i].qty++
+renderCart()
+
+}
+
+function minusQty(i){
+
+if(cart[i].qty>1){
+
+cart[i].qty--
+
+}else{
+
+cart.splice(i,1)
+
+}
+
+renderCart()
+
+}
+
+function removeItem(i){
+
+cart.splice(i,1)
+
+renderCart()
+
+}
+
+function renderCart(){
+
+let box=document.getElementById("cartItems")
+
+box.innerHTML=""
+
+let total=0
+
+cart.forEach((item,i)=>{
+
+let subtotal=item.price*item.qty
+
+total+=subtotal
+
+box.innerHTML+=`
+
+<div class="cart-item">
+
+<b>${item.name}</b>
+
+<br>
+
+<button class="qty-btn" onclick="minusQty(${i})">-</button>
+${item.qty}
+<button class="qty-btn" onclick="plusQty(${i})">+</button>
+
+<br>
+
+Rp ${subtotal.toLocaleString("id-ID")}
+
+<br>
+
+<button class="delete" onclick="removeItem(${i})">Hapus</button>
+
+</div>
+
+`
+
+})
+
+document.getElementById("total").innerText=total.toLocaleString("id-ID")
+
+}
+
+function showQRIS(){
+
+document.getElementById("qrisBox").style.display="block"
+
+}
+
+function orderWA(){
+
+let username=document.getElementById("username").value
+
+let text=""
+let total=0
+
+cart.forEach(item=>{
+
+let subtotal=item.price*item.qty
+
+text+=`${item.name} x${item.qty} = Rp ${subtotal.toLocaleString("id-ID")}\n`
+
+total+=subtotal
+
+})
+
+let message=`ORDER NEON STORE
+
+Username : ${username}
+
+Item :
+${text}
+
+Total : Rp ${total.toLocaleString("id-ID")}
+
+Saya sudah melakukan pembayaran QRIS
+Berikut bukti transfer saya.`
+
+let url="https://wa.me/6285804197934?text="+encodeURIComponent(message)
+
+window.open(url)
+
+}
+
+</script>
+
+</body>
+</html>
 ```
