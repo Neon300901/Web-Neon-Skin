@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Neon Store - Fish It</title>
+<title>Neon Store Order</title>
 
 <style>
 
@@ -20,31 +20,16 @@ text-align:center;
 }
 
 .logo{
-font-size:32px;
+font-size:28px;
 font-weight:bold;
 color:#22d3ee;
 }
 
-.sub{
-font-size:14px;
-color:#94a3b8;
-}
-
 .container{
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
-
-.section-title{
-font-size:22px;
-margin:20px 0;
-}
-
-.grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:20px;
 }
 
 .card{
@@ -56,52 +41,55 @@ text-align:center;
 
 .card img{
 width:100%;
-border-radius:8px;
+border-radius:10px;
 }
 
 .price{
 color:#22d3ee;
-margin-top:5px;
-}
-
-input[type="checkbox"]{
-margin-top:10px;
-}
-
-input[type="text"]{
-padding:10px;
-border-radius:6px;
-border:none;
-width:100%;
-margin-bottom:20px;
-}
-
-.total-box{
-background:#020617;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
+margin:10px 0;
+font-weight:bold;
 }
 
 button{
-background:#25D366;
+background:#22d3ee;
 border:none;
-padding:15px;
-width:100%;
-color:white;
-font-size:18px;
-border-radius:8px;
-margin-top:15px;
+padding:10px;
+border-radius:6px;
 cursor:pointer;
 }
 
-.qris{
-text-align:center;
-margin-top:20px;
+.cart{
+background:#020617;
+padding:20px;
+position:fixed;
+right:0;
+top:0;
+width:280px;
+height:100%;
+overflow:auto;
 }
 
-.qris img{
-width:250px;
+.cart h3{
+margin-top:0;
+}
+
+.cart-item{
+font-size:14px;
+margin-bottom:10px;
+}
+
+.total{
+font-size:18px;
+margin-top:10px;
+color:#22d3ee;
+}
+
+input{
+padding:8px;
+border-radius:6px;
+border:none;
+width:100%;
+margin-bottom:10px;
 }
 
 </style>
@@ -110,226 +98,168 @@ width:250px;
 <body>
 
 <header>
-
-<div class="logo">⚡ NEON STORE</div>
-<div class="sub">Fish It Skin • Gamepass • Crate Shop</div>
-
+<div class="logo">NEON STORE</div>
+<div>Fish It Item Shop</div>
 </header>
 
+<div style="padding:20px">
+
+Username Roblox
+<input id="username" placeholder="Masukkan username">
+
+</div>
+
 <div class="container">
-
-<h3>Username Roblox</h3>
-<input type="text" id="username" placeholder="Masukkan Username Roblox">
-
-<!-- SKIN -->
-
-<h2 class="section-title">Skin</h2>
-
-<div class="grid">
 
 <div class="card">
 <img src="https://via.placeholder.com/200">
 <h4>Dark Matter Scythe</h4>
 <div class="price">Rp 84.000</div>
-<input type="checkbox" value="Dark Matter Scythe" data-price="84000">
+
+Qty
+<input type="number" value="1" min="1" id="qty1">
+
+<button onclick="tambahItem('Dark Matter Scythe',84000,'qty1')">
+Tambah
+</button>
+
 </div>
 
 <div class="card">
 <img src="https://via.placeholder.com/200">
 <h4>Kitty Guitar</h4>
 <div class="price">Rp 76.000</div>
-<input type="checkbox" value="Kitty Guitar" data-price="76000">
+
+Qty
+<input type="number" value="1" min="1" id="qty2">
+
+<button onclick="tambahItem('Kitty Guitar',76000,'qty2')">
+Tambah
+</button>
+
 </div>
 
 <div class="card">
 <img src="https://via.placeholder.com/200">
 <h4>Void Craft</h4>
 <div class="price">Rp 47.000</div>
-<input type="checkbox" value="Void Craft" data-price="47000">
-</div>
+
+Qty
+<input type="number" value="1" min="1" id="qty3">
+
+<button onclick="tambahItem('Void Craft',47000,'qty3')">
+Tambah
+</button>
 
 </div>
-
-<!-- GAMEPASS -->
-
-<h2 class="section-title">Gamepass</h2>
-
-<div class="grid">
 
 <div class="card">
 <img src="https://via.placeholder.com/200">
 <h4>VIP + Luck</h4>
 <div class="price">Rp 38.000</div>
-<input type="checkbox" value="VIP + Luck" data-price="38000">
-</div>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Mutasi</h4>
-<div class="price">Rp 25.000</div>
-<input type="checkbox" value="Mutasi" data-price="25000">
-</div>
+Qty
+<input type="number" value="1" min="1" id="qty4">
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Advance Luck</h4>
-<div class="price">Rp 47.000</div>
-<input type="checkbox" value="Advance Luck" data-price="47000">
-</div>
+<button onclick="tambahItem('VIP + Luck',38000,'qty4')">
+Tambah
+</button>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Extra Luck</h4>
-<div class="price">Rp 21.000</div>
-<input type="checkbox" value="Extra Luck" data-price="21000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Double XP</h4>
-<div class="price">Rp 18.000</div>
-<input type="checkbox" value="Double XP" data-price="18000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Mini Hoverboat</h4>
-<div class="price">Rp 19.000</div>
-<input type="checkbox" value="Mini Hoverboat" data-price="19000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Sell Anywhere</h4>
-<div class="price">Rp 27.000</div>
-<input type="checkbox" value="Sell Anywhere" data-price="27000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Small Luck</h4>
-<div class="price">Rp 5.000</div>
-<input type="checkbox" value="Small Luck" data-price="5000">
 </div>
 
 </div>
 
-<!-- CRATE -->
+<div class="cart">
 
-<h2 class="section-title">Crate</h2>
+<h3>Keranjang</h3>
 
-<div class="grid">
+<div id="cartList"></div>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Azure Crate 1x</h4>
-<div class="price">Rp 11.000</div>
-<input type="checkbox" value="Azure Crate 1x" data-price="11000">
+<div class="total">
+Total : Rp <span id="total">0</span>
 </div>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Azure Crate 5x</h4>
-<div class="price">Rp 50.000</div>
-<input type="checkbox" value="Azure Crate 5x" data-price="50000">
-</div>
+<br>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Pirate Crate 1x</h4>
-<div class="price">Rp 11.000</div>
-<input type="checkbox" value="Pirate Crate 1x" data-price="11000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Pirate Crate 5x</h4>
-<div class="price">Rp 50.000</div>
-<input type="checkbox" value="Pirate Crate 5x" data-price="50000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Elder Wood Crate 1x</h4>
-<div class="price">Rp 10.000</div>
-<input type="checkbox" value="Elder Wood Crate 1x" data-price="10000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Elder Wood Crate 5x</h4>
-<div class="price">Rp 45.000</div>
-<input type="checkbox" value="Elder Wood Crate 5x" data-price="45000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Luxury Crate 1x</h4>
-<div class="price">Rp 10.000</div>
-<input type="checkbox" value="Luxury Crate 1x" data-price="10000">
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Luxury Crate 5x</h4>
-<div class="price">Rp 45.000</div>
-<input type="checkbox" value="Luxury Crate 5x" data-price="45000">
-</div>
-
-</div>
-
-<div class="total-box">
-
-<h2>Total Harga: Rp <span id="total">0</span></h2>
-
-<div class="qris">
-<h3>Pembayaran QRIS</h3>
-<img src="QRIS.png">
-<p>Setelah transfer kirim bukti pembayaran.</p>
-</div>
-
-<button onclick="orderWA()">Order via WhatsApp</button>
-
-</div>
+<button onclick="orderWA()">
+Order via WhatsApp
+</button>
 
 </div>
 
 <script>
 
-const checkbox = document.querySelectorAll("input[type=checkbox]");
-const totalText = document.getElementById("total");
+let cart = []
 
-checkbox.forEach(box=>{
-box.addEventListener("change", hitungTotal);
-});
+function tambahItem(nama,harga,qtyId){
 
-function hitungTotal(){
+let qty = parseInt(document.getElementById(qtyId).value)
 
-let total = 0;
+let item = cart.find(i=>i.nama===nama)
 
-checkbox.forEach(box=>{
-if(box.checked){
-total += parseInt(box.dataset.price);
+if(item){
+
+item.qty += qty
+
+}else{
+
+cart.push({
+nama:nama,
+harga:harga,
+qty:qty
+})
+
 }
-});
 
-totalText.innerText = total.toLocaleString("id-ID");
+renderCart()
+
+}
+
+function renderCart(){
+
+let list = document.getElementById("cartList")
+
+list.innerHTML=""
+
+let total = 0
+
+cart.forEach(item=>{
+
+let subtotal = item.harga * item.qty
+
+total += subtotal
+
+list.innerHTML +=
+`<div class="cart-item">
+${item.nama} x${item.qty}
+<br>
+Rp ${subtotal.toLocaleString("id-ID")}
+</div>`
+
+})
+
+document.getElementById("total").innerText =
+total.toLocaleString("id-ID")
 
 }
 
 function orderWA(){
 
-let username = document.getElementById("username").value;
+let username = document.getElementById("username").value
 
-let items = [];
+let pesanItem=""
 
-checkbox.forEach(box=>{
-if(box.checked){
-items.push(box.value);
-}
-});
+let total=0
 
-let total = totalText.innerText;
+cart.forEach(item=>{
+
+let subtotal = item.harga * item.qty
+
+pesanItem += `${item.nama} x${item.qty} = Rp ${subtotal.toLocaleString("id-ID")}\n`
+
+total += subtotal
+
+})
 
 let pesan =
 `ORDER NEON STORE
@@ -337,16 +267,17 @@ let pesan =
 Username : ${username}
 
 Item :
-${items.join("\n")}
+${pesanItem}
 
-Total : Rp ${total}
+Total : Rp ${total.toLocaleString("id-ID")}
 
 Saya sudah melakukan pembayaran via QRIS.
 Berikut bukti transfer saya.`
 
-let url = "https://wa.me/6285804197934?text=" + encodeURIComponent(pesan);
+let url =
+"https://wa.me/6285804197934?text="+encodeURIComponent(pesan)
 
-window.open(url,'_blank');
+window.open(url)
 
 }
 
