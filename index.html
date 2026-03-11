@@ -3,7 +3,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Neon Store - Fish It Shop</title>
+<title>Neon Store Fish It Shop</title>
 
 <style>
 
@@ -22,8 +22,8 @@ text-align:center;
 
 .logo{
 font-size:32px;
-font-weight:bold;
 color:#22d3ee;
+font-weight:bold;
 }
 
 .container{
@@ -41,14 +41,9 @@ border-radius:10px;
 text-align:center;
 }
 
-.card img{
-width:100%;
-border-radius:10px;
-}
-
 .price{
 color:#22d3ee;
-margin:10px 0;
+margin:8px 0;
 font-weight:bold;
 }
 
@@ -71,19 +66,14 @@ padding:20px;
 overflow:auto;
 }
 
-.cart h2{
-margin-top:0;
-}
-
 .cart-item{
 border-bottom:1px solid #334155;
 padding:10px 0;
-font-size:14px;
 }
 
 .qty-btn{
 padding:3px 8px;
-margin:3px;
+margin:2px;
 }
 
 .delete{
@@ -93,8 +83,8 @@ margin-top:5px;
 
 .total{
 font-size:18px;
-margin-top:10px;
 color:#22d3ee;
+margin-top:10px;
 }
 
 input{
@@ -103,6 +93,17 @@ border-radius:6px;
 border:none;
 width:100%;
 margin-bottom:10px;
+}
+
+.qris-box{
+display:none;
+text-align:center;
+margin-top:20px;
+}
+
+.qris-box img{
+width:200px;
+border-radius:10px;
 }
 
 </style>
@@ -122,190 +123,15 @@ Username Roblox
 
 <div class="container">
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Dark Matter Scythe</h4>
-<div class="price">Rp 84.000</div>
-<button onclick="addToCart('Dark Matter Scythe',84000)">Tambah</button>
-</div>
+<div class="card"><h4>Dark Matter Scythe</h4><div class="price">Rp 84.000</div><button onclick="addToCart('Dark Matter Scythe',84000)">Tambah</button></div>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Kitty Guitar</h4>
-<div class="price">Rp 76.000</div>
-<button onclick="addToCart('Kitty Guitar',76000)">Tambah</button>
-</div>
+<div class="card"><h4>Kitty Guitar</h4><div class="price">Rp 76.000</div><button onclick="addToCart('Kitty Guitar',76000)">Tambah</button></div>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>Void Craft</h4>
-<div class="price">Rp 47.000</div>
-<button onclick="addToCart('Void Craft',47000)">Tambah</button>
-</div>
+<div class="card"><h4>Void Craft</h4><div class="price">Rp 47.000</div><button onclick="addToCart('Void Craft',47000)">Tambah</button></div>
 
-<div class="card">
-<img src="https://via.placeholder.com/200">
-<h4>VIP + Luck</h4>
-<div class="price">Rp 38.000</div>
-<button onclick="addToCart('VIP + Luck',38000)">Tambah</button>
-</div>
+<div class="card"><h4>VIP + Luck</h4><div class="price">Rp 38.000</div><button onclick="addToCart('VIP + Luck',38000)">Tambah</button></div>
 
-</div>
+<div class="card"><h4>Mutasi</h4><div class="price">Rp 25.000</div><button onclick="addToCart('Mutasi',25000)">Tambah</button></div>
 
-<div class="cart">
-
-<h2>Keranjang</h2>
-
-<div id="cartItems"></div>
-
-<div class="total">
-Total : Rp <span id="total">0</span>
-</div>
-
-<br>
-
-<button onclick="orderWA()">Order via WhatsApp</button>
-
-</div>
-
-<script>
-
-let cart=[]
-
-function addToCart(name,price){
-
-let found=cart.find(item=>item.name===name)
-
-if(found){
-
-found.qty++
-
-}else{
-
-cart.push({
-name:name,
-price:price,
-qty:1
-})
-
-}
-
-renderCart()
-
-}
-
-function plusQty(index){
-
-cart[index].qty++
-
-renderCart()
-
-}
-
-function minusQty(index){
-
-if(cart[index].qty>1){
-
-cart[index].qty--
-
-}else{
-
-cart.splice(index,1)
-
-}
-
-renderCart()
-
-}
-
-function removeItem(index){
-
-cart.splice(index,1)
-
-renderCart()
-
-}
-
-function renderCart(){
-
-let box=document.getElementById("cartItems")
-box.innerHTML=""
-
-let total=0
-
-cart.forEach((item,index)=>{
-
-let subtotal=item.price*item.qty
-total+=subtotal
-
-box.innerHTML+=`
-<div class="cart-item">
-
-<b>${item.name}</b>
-
-<br>
-
-<button class="qty-btn" onclick="minusQty(${index})">-</button>
-${item.qty}
-<button class="qty-btn" onclick="plusQty(${index})">+</button>
-
-<br>
-Rp ${subtotal.toLocaleString("id-ID")}
-
-<br>
-<button class="delete" onclick="removeItem(${index})">
-Hapus
-</button>
-
-</div>
-`
-
-})
-
-document.getElementById("total").innerText=
-total.toLocaleString("id-ID")
-
-}
-
-function orderWA(){
-
-let username=document.getElementById("username").value
-
-let text=""
-let total=0
-
-cart.forEach(item=>{
-
-let subtotal=item.price*item.qty
-
-text+=`${item.name} x${item.qty} = Rp ${subtotal.toLocaleString("id-ID")}\n`
-
-total+=subtotal
-
-})
-
-let message=
-`ORDER NEON STORE
-
-Username : ${username}
-
-Item :
-${text}
-
-Total : Rp ${total.toLocaleString("id-ID")}
-
-Saya sudah melakukan pembayaran via QRIS.
-Berikut bukti transfer saya.`
-
-let url=
-"https://wa.me/6285804197934?text="+encodeURIComponent(message)
-
-window.open(url,"_blank")
-
-}
-
-</script>
-
-</body>
-</html>
+<div class="card"><h4>Advance Luck</h4><div class="price">Rp 47.000</div><butto
 ```
